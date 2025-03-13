@@ -1,0 +1,14 @@
+C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\Batch2Task14Hinting\bin\Debug\net9.0\Batch2Task14Hinting.exe
+C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\Batch2Task14Hinting\bin\Debug\net9.0\Batch2Task14Hinting.deps.json
+C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\Batch2Task14Hinting\bin\Debug\net9.0\Batch2Task14Hinting.runtimeconfig.json
+C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\Batch2Task14Hinting\bin\Debug\net9.0\Batch2Task14Hinting.dll
+C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\Batch2Task14Hinting\bin\Debug\net9.0\Batch2Task14Hinting.pdb
+C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\Batch2Task14Hinting\obj\Debug\net9.0\Batch2Task14Hinting.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\Batch2Task14Hinting\obj\Debug\net9.0\Batch2Task14Hinting.AssemblyInfoInputs.cache
+C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\Batch2Task14Hinting\obj\Debug\net9.0\Batch2Task14Hinting.AssemblyInfo.cs
+C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\Batch2Task14Hinting\obj\Debug\net9.0\Batch2Task14Hinting.csproj.CoreCompileInputs.cache
+C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\Batch2Task14Hinting\obj\Debug\net9.0\Batch2Task14Hinting.dll
+C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\Batch2Task14Hinting\obj\Debug\net9.0\refint\Batch2Task14Hinting.dll
+C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\Batch2Task14Hinting\obj\Debug\net9.0\Batch2Task14Hinting.pdb
+C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\Batch2Task14Hinting\obj\Debug\net9.0\Batch2Task14Hinting.genruntimeconfig.cache
+C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\Batch2Task14Hinting\obj\Debug\net9.0\ref\Batch2Task14Hinting.dll
