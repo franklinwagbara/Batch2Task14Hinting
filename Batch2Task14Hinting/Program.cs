@@ -1,23 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using static InMemoryTable.ItemMasterTable;
 
 namespace InMemoryTable
 {
-    [Serializable]
-    public abstract class MasterTable_Base
-    {
-        public abstract class MasterData_Base
-        {
-            public abstract int GetId();
-        }
-
-        public abstract void Append(MasterTable_Base data);
-
-        public abstract MasterData_Base Find(int id);
-    }
-
     public class ItemMasterTable : MasterTable_Base
     {
         [Serializable]
@@ -30,7 +16,7 @@ namespace InMemoryTable
             {
                 if (id <= 0)
                 {
-                    throw new ArgumentException("Id must be a positive integer.", nameof(id));
+                    throw new ArgumentOutOfRangeException(nameof(id), "Id must be greater than zero.");
                 }
                 if (string.IsNullOrWhiteSpace(name))
                 {
@@ -40,17 +26,28 @@ namespace InMemoryTable
                 Id = id;
                 Name = name;
             }
-
-            public override int GetId()
-            {
-                return Id;
-            }
         }
 
+        private readonly List<ItemData> _items = new();
 
-        private readonly List<ItemData> _items = new List<ItemData>();
+        public ItemMasterTable() { }
 
-        public IReadOnlyList<ItemData> Items => _items.AsReadOnly();
+        public ItemMasterTable(IEnumerable<ItemData> items)
+        {
+            if (items == null)
+            {
+                throw new ArgumentNullException(nameof(items), "Items cannot be null.");
+            }
+
+            foreach (var item in items)
+            {
+                if (_items.Any(existingItem => existingItem.Id == item.Id))
+                {
+                    throw new ArgumentException($"An item with Id {item.Id} already exists.", nameof(items));
+                }
+                _items.Add(item);
+            }
+        }
 
         /// <summary>
         /// Appends items from another MasterTable_Base instance if it is of type ItemMasterTable.
@@ -69,11 +66,11 @@ namespace InMemoryTable
                 throw new ArgumentException("Data must be of type ItemMasterTable.", nameof(data));
             }
 
-            foreach (var item in itemTable.Items)
+            foreach (ItemData item in itemTable._items)
             {
                 if (_items.Any(existingItem => existingItem.Id == item.Id))
                 {
-                    throw new ArgumentException($"An item with Id {item.Id} already exists in the table.", nameof(data));
+                    throw new ArgumentException($"An item with Id {item.Id} already exists.", nameof(data));
                 }
                 _items.Add(item);
             }
@@ -88,49 +85,37 @@ namespace InMemoryTable
         {
             if (id <= 0)
             {
-                throw new ArgumentException("Id must be a positive integer.", nameof(id));
+                throw new ArgumentOutOfRangeException(nameof(id), "Id must be greater than zero.");
             }
 
-            return _items.FirstOrDefault(item => item.Id == id);
+            return _items.Find(item => item.Id == id);
         }
+    }
 
-        public void Add(ItemData item)
+    [Serializable]
+    public abstract class MasterTable_Base
+    {
+        public abstract class MasterData_Base
         {
-            if (item == null)
-            {
-                throw new ArgumentNullException(nameof(item), "Item cannot be null.");
-            }
-            if (_items.Any(existingItem => existingItem.Id == item.Id))
-            {
-                throw new ArgumentException($"An item with Id {item.Id} already exists in the table.", nameof(item));
-            }
-
-            _items.Add(item);
         }
+
+        public abstract void Append(MasterTable_Base data);
+
+        public abstract MasterData_Base Find(int id);
     }
 
     public class Program
     {
         public static void Main(string[] args)
         {
-            var itemMasterTable1 = new ItemMasterTable();
-            itemMasterTable1.Add(new ItemData(1, "Item1"));
-            itemMasterTable1.Add(new ItemData(2, "Item2"));
-            itemMasterTable1.Add(new ItemData(3, "Item3"));
-
-            var itemMasterTable2 = new ItemMasterTable();
-            itemMasterTable2.Add(new ItemData(4, "Item4"));
-            itemMasterTable2.Add(new ItemData(5, "Item5"));
-            itemMasterTable2.Add(new ItemData(6, "Item6"));
-
-            itemMasterTable1.Append(itemMasterTable2);
-
-            Console.WriteLine((itemMasterTable1.Find(1) as ItemData).Name);
-            Console.WriteLine((itemMasterTable1.Find(2) as ItemData).Name);
-            Console.WriteLine((itemMasterTable1.Find(3) as ItemData).Name);
-            Console.WriteLine((itemMasterTable1.Find(4) as ItemData).Name);
-            Console.WriteLine((itemMasterTable1.Find(5) as ItemData).Name);
-            Console.WriteLine((itemMasterTable1.Find(6) as ItemData).Name);
+            var items = new List<ItemMasterTable.ItemData>
+            {
+                new ItemMasterTable.ItemData(1, "Item1"),
+                new ItemMasterTable.ItemData(2, "Item2")
+            };
+            var table = new ItemMasterTable(items);
+            Console.WriteLine((table.Find(1) as ItemMasterTable.ItemData).Name);
+            Console.WriteLine((table.Find(2) as ItemMasterTable.ItemData).Name);
         }
     }
 }

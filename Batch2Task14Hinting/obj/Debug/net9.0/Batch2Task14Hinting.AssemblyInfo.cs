@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Batch2Task14Hinting")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+338214a9644f2e8cf2f03addc19bd98ebe083fc3")]
 [assembly: System.Reflection.AssemblyProductAttribute("Batch2Task14Hinting")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Batch2Task14Hinting")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

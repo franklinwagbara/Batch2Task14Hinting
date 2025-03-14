@@ -104,3 +104,4 @@ C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14
 C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\AppTests\obj\Debug\net9.0\AppTests.pdb
 C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\AppTests\obj\Debug\net9.0\AppTests.genruntimeconfig.cache
 C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\AppTests\obj\Debug\net9.0\ref\AppTests.dll
+C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\AppTests\obj\Debug\net9.0\AppTests.sourcelink.json

@@ -12,3 +12,4 @@ C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14
 C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\Batch2Task14Hinting\obj\Debug\net9.0\Batch2Task14Hinting.pdb
 C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\Batch2Task14Hinting\obj\Debug\net9.0\Batch2Task14Hinting.genruntimeconfig.cache
 C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\Batch2Task14Hinting\obj\Debug\net9.0\ref\Batch2Task14Hinting.dll
+C:\Users\Franklin Wagbara\Documents\Turing\Production\batch2\Task14\Batch2Task14Hinting\Batch2Task14Hinting\obj\Debug\net9.0\Batch2Task14Hinting.sourcelink.json

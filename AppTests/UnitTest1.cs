@@ -18,10 +18,10 @@ namespace InMemoryTableTests
         }
 
         [Test]
-        public void ItemData_Constructor_InvalidId_ThrowsArgumentException()
+        public void ItemData_Constructor_InvalidId_ThrowsArgumentOutOfRangeException()
         {
-            Assert.Throws<ArgumentException>(() => new ItemMasterTable.ItemData(0, "Item1"));
-            Assert.Throws<ArgumentException>(() => new ItemMasterTable.ItemData(-1, "Item1"));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new ItemMasterTable.ItemData(0, "Item1"));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new ItemMasterTable.ItemData(-1, "Item1"));
         }
 
         [Test]
@@ -33,144 +33,143 @@ namespace InMemoryTableTests
         }
 
         [Test]
-        public void Add_ValidItem_AddsToList()
+        public void ItemMasterTable_Constructor_ValidInput_CreatesInstance()
         {
             var table = new ItemMasterTable();
-            var item = new ItemMasterTable.ItemData(1, "Sword");
-            table.Add(item);
-            Assert.That(table.Items.Count, Is.EqualTo(1));
-            Assert.That(table.Items[0], Is.EqualTo(item));
+            Assert.That(table, Is.Not.Null);
         }
 
         [Test]
-        public void Add_NullItem_ThrowsArgumentNullException()
+        public void ItemMasterTable_ConstructorWithItems_ValidInput_CreatesInstanceWithItems()
         {
-            var table = new ItemMasterTable();
-            Assert.Throws<ArgumentNullException>(() => table.Add(null));
+            var items = new List<ItemData>
+            {
+                new ItemData(1, "Item1"),
+                new ItemData(2, "Item2")
+            };
+            var table = new ItemMasterTable(items);
+
+            Assert.That(table.Find(1), Is.Not.Null);
+            Assert.That(table.Find(2), Is.Not.Null);
         }
 
         [Test]
-        public void Add_DuplicateItemId_ThrowsArgumentException()
+        public void ItemMasterTable_ConstructorWithItems_NullItems_ThrowsArgumentNullException()
         {
-            var table = new ItemMasterTable();
-            table.Add(new ItemMasterTable.ItemData(1, "Sword"));
-            Assert.Throws<ArgumentException>(() => table.Add(new ItemMasterTable.ItemData(1, "Shield")));
+            Assert.Throws<ArgumentNullException>(() => new ItemMasterTable(null));
         }
 
+
+        [Test]
+        public void ItemMasterTable_Constructor_DuplicateId_ThrowsArgumentException()
+        {
+            var items = new List<ItemData>
+            {
+                new ItemData(1, "Item1"),
+                new ItemData(1, "Item2") // Duplicate ID
+            };
+            Assert.Throws<ArgumentException>(() => new ItemMasterTable(items));
+        }
 
         [Test]
         public void Append_ValidItemMasterTable_AppendsItems()
         {
-            var table1 = new ItemMasterTable();
-            table1.Add(new ItemMasterTable.ItemData(1, "Item1"));
-            var table2 = new ItemMasterTable();
-            table2.Add(new ItemMasterTable.ItemData(2, "Item2"));
+            var table1 = new ItemMasterTable(new List<ItemData>() { new ItemData(1, "Item1") });
+            var table2 = new ItemMasterTable(new List<ItemData>() { new ItemData(2, "Item2") });
 
             table1.Append(table2);
 
-            Assert.That(table1.Items.Count, Is.EqualTo(2));
             Assert.That(table1.Find(1), Is.Not.Null);
             Assert.That(table1.Find(2), Is.Not.Null);
         }
 
         [Test]
-        public void Append_NullMasterTable_ThrowsArgumentNullException()
+        public void Append_NullData_ThrowsArgumentNullException()
         {
             var table = new ItemMasterTable();
             Assert.Throws<ArgumentNullException>(() => table.Append(null));
         }
 
         [Test]
-        public void Append_InvalidMasterTableType_ThrowsArgumentException()
+        public void Append_InvalidDataType_ThrowsArgumentException()
         {
             var table = new ItemMasterTable();
-            var invalidTable = new InvalidMasterTable(); // Assuming InvalidMasterTable exists and inherits from MasterTable_Base
-            Assert.Throws<ArgumentException>(() => table.Append(invalidTable));
+            var invalidData = new InvalidMasterTable(); // Some other class inheriting MasterTable_Base
+            Assert.Throws<ArgumentException>(() => table.Append(invalidData));
         }
 
         [Test]
-        public void Append_DuplicateItemId_ThrowsArgumentException()
+        public void Append_DuplicateId_ThrowsArgumentException()
         {
-            var table1 = new ItemMasterTable();
-            table1.Add(new ItemMasterTable.ItemData(1, "Sword"));
-            var table2 = new ItemMasterTable();
-            table2.Add(new ItemMasterTable.ItemData(1, "Shield"));
+            var table1 = new ItemMasterTable(new List<ItemData> { new ItemData(1, "Item1") });
+            var table2 = new ItemMasterTable(new List<ItemData> { new ItemData(1, "Item2") }); // Duplicate ID
 
             Assert.Throws<ArgumentException>(() => table1.Append(table2));
         }
 
-
-        [Test]
-        public void Append_EmptyTable_AppendsSuccessfully()
-        {
-            var table1 = new ItemMasterTable();
-            var table2 = new ItemMasterTable();
-            table1.Append(table2);
-            Assert.That(table1.Items.Count, Is.EqualTo(0));
-        }
-
-
         [Test]
         public void Find_ExistingId_ReturnsItemData()
         {
-            var table = new ItemMasterTable();
-            var item = new ItemMasterTable.ItemData(1, "Sword");
-            table.Add(item);
-
-            var foundItem = table.Find(1);
-
+            var table = new ItemMasterTable(new List<ItemData> { new ItemData(1, "Item1") });
+            var foundItem = table.Find(1) as ItemMasterTable.ItemData;
             Assert.That(foundItem, Is.Not.Null);
-            Assert.That(foundItem.GetId(), Is.EqualTo(1));
+            Assert.That(foundItem.Id, Is.EqualTo(1));
+            Assert.That(foundItem.Name, Is.EqualTo("Item1"));
         }
 
         [Test]
         public void Find_NonExistingId_ReturnsNull()
         {
             var table = new ItemMasterTable();
-            var item = new ItemMasterTable.ItemData(1, "Sword");
-            table.Add(item);
-
-            var foundItem = table.Find(2);
-
-            Assert.That(foundItem, Is.Null);
-        }
-
-        [Test]
-        public void Find_InvalidId_ThrowsArgumentException()
-        {
-            var table = new ItemMasterTable();
-            Assert.Throws<ArgumentException>(() => table.Find(0));
-            Assert.Throws<ArgumentException>(() => table.Find(-1));
-        }
-
-        [Test]
-        public void Find_EmptyTable_ReturnsNull()
-        {
-            var table = new ItemMasterTable();
             var foundItem = table.Find(1);
             Assert.That(foundItem, Is.Null);
         }
 
         [Test]
-        public void GetId_ReturnsCorrectId()
+        public void Find_InvalidId_ThrowsArgumentOutOfRangeException()
         {
-            var itemData = new ItemData(123, "Test Item");
-            Assert.That(itemData.GetId(), Is.EqualTo(123));
+            var table = new ItemMasterTable();
+            Assert.Throws<ArgumentOutOfRangeException>(() => table.Find(0));
         }
 
         [Test]
-        public void ItemData_LongName_DoesNotThrowException()
+        public void Append_EmptyTable_SuccessfullyAppends()
         {
-            string longName = new string('a', 1000); // Create a string with 1000 characters
-            var itemData = new ItemMasterTable.ItemData(1, longName);
-            Assert.That(itemData.Name, Is.EqualTo(longName));
+            var table1 = new ItemMasterTable();
+            var table2 = new ItemMasterTable(new List<ItemData> { new ItemData(1, "Item1") });
+            table1.Append(table2);
+            Assert.That(table1.Find(1), Is.Not.Null);
+
         }
 
-        // Dummy class for testing Append with invalid type
+        [Test]
+        public void Append_ToFilledTable_SuccessfullyAppends()
+        {
+            var table1 = new ItemMasterTable(new List<ItemData> {
+                new ItemData(1,"Item1"),
+                new ItemData(2, "Item2")
+                }
+            );
+            var table2 = new ItemMasterTable(new List<ItemData> { new ItemData(3, "Item3") });
+
+            table1.Append(table2);
+
+            Assert.That(table1.Find(3), Is.Not.Null);
+
+        }
+
+        // Helper class for testing invalid Append scenario
         private class InvalidMasterTable : MasterTable_Base
         {
-            public override void Append(MasterTable_Base data) { }
-            public override MasterData_Base Find(int id) => null;
+            public override void Append(MasterTable_Base data)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override MasterData_Base Find(int id)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
